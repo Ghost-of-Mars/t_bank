@@ -73,8 +73,4 @@ public class steps {
     public void checkAllSoftAssertions() {
         softAssertions.assertAll();
     }
-
-    @Then("Проверить, что у счета с номером <number> accountNumber равен <accountNumber>, name равен <name>, currency равен <currency>, bankBik равен <bankBik>, accountType равен <accountType>, activationDate равен <activationDate>, balance.otb равен <balanceOtb>, balance.authorized равен <balanceAuthorized>, balance.pendingPayments равен <balancePendingPayments>, balance.pendingRequisitions равен <balancePendingRequisitions>, transitAccount.accountNumber равен <transitAccountAccountNumber>")
-    public void проверитьЧтоУСчетаСНомеромNumberAccountNumberРавенAccountNumberNameРавенNameCurrencyРавенCurrencyBankBikРавенBankBikAccountTypeРавенAccountTypeActivationDateРавенActivationDateBalanceOtbРавенBalanceOtbBalanceAuthorizedРавенBalanceAuthorizedBalancePendingPaymentsРавенBalancePendingPaymentsBalancePendingRequisitionsРавенBalancePendingRequisitionsTransitAccountAccountNumberРавенTransitAccountAccountNumber() {
-    }
 }
