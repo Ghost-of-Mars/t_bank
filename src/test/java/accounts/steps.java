@@ -1,7 +1,6 @@
 package accounts;
 
-import accounts.models.ResponseModelAccountInfo;
-import accounts.models.ResponseModelAccountInfo.Balance;
+import dto.AccountInfo;
 import apiClients.ApiClient;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -17,19 +16,19 @@ import static specs.ResponseSpec.respSpec200;
 
 public class steps {
 
-    List<ResponseModelAccountInfo> responseModelAccountInfo = new ArrayList<>();
+    List<AccountInfo> accountInfo = new ArrayList<>();
     SoftAssertions softAssertions = new SoftAssertions();
 
     @When("Отправить запрос на {string}")
     public void sendRequestToURL(String string) {
 
-        responseModelAccountInfo = (given(reqSpec)
+        accountInfo = (given(reqSpec)
                 .header("Authorization", ApiClient.TOKEN)
                 .when()
                 .get(string)
                 .then()
                 .spec(respSpec200)
-                .extract().jsonPath().getList("", ResponseModelAccountInfo.class));
+                .extract().jsonPath().getList("", AccountInfo.class));
     }
 
     @Then("Проверить,что у {int} элемента массива" +
@@ -56,17 +55,17 @@ public class steps {
                                     int balancePendingPayments,
                                     int balancePendingRequisitions,
                                     String transitAccountAccountNumber) {
-        softAssertions.assertThat(responseModelAccountInfo.get(number).getAccountNumber()).isEqualTo(accountNumber);
-        softAssertions.assertThat(responseModelAccountInfo.get(number).getName()).isEqualTo(name);
-        softAssertions.assertThat(responseModelAccountInfo.get(number).getCurrency()).isEqualTo(currency);
-        softAssertions.assertThat(responseModelAccountInfo.get(number).getBankBik()).isEqualTo(bankBik);
-        softAssertions.assertThat(responseModelAccountInfo.get(number).getAccountType()).isEqualTo(accountType);
-        softAssertions.assertThat(responseModelAccountInfo.get(number).getActivationDate()).isEqualTo(activationDate);
-        softAssertions.assertThat(responseModelAccountInfo.get(number).getBalance().getOtb()).isEqualTo(balanceOtb);
-        softAssertions.assertThat(responseModelAccountInfo.get(number).getBalance().getAuthorized()).isEqualTo(balanceAuthorized);
-        softAssertions.assertThat(responseModelAccountInfo.get(number).getBalance().getPendingPayments()).isEqualTo(balancePendingPayments);
-        softAssertions.assertThat(responseModelAccountInfo.get(number).getBalance().getPendingRequisitions()).isEqualTo(balancePendingRequisitions);
-        softAssertions.assertThat(responseModelAccountInfo.get(number).getTransitAccount().getAccountNumber()).isEqualTo(transitAccountAccountNumber);
+        softAssertions.assertThat(accountInfo.get(number).getAccountNumber()).isEqualTo(accountNumber);
+        softAssertions.assertThat(accountInfo.get(number).getName()).isEqualTo(name);
+        softAssertions.assertThat(accountInfo.get(number).getCurrency()).isEqualTo(currency);
+        softAssertions.assertThat(accountInfo.get(number).getBankBik()).isEqualTo(bankBik);
+        softAssertions.assertThat(accountInfo.get(number).getAccountType()).isEqualTo(accountType);
+        softAssertions.assertThat(accountInfo.get(number).getActivationDate()).isEqualTo(activationDate);
+        softAssertions.assertThat(accountInfo.get(number).getBalance().getOtb()).isEqualTo(balanceOtb);
+        softAssertions.assertThat(accountInfo.get(number).getBalance().getAuthorized()).isEqualTo(balanceAuthorized);
+        softAssertions.assertThat(accountInfo.get(number).getBalance().getPendingPayments()).isEqualTo(balancePendingPayments);
+        softAssertions.assertThat(accountInfo.get(number).getBalance().getPendingRequisitions()).isEqualTo(balancePendingRequisitions);
+        softAssertions.assertThat(accountInfo.get(number).getTransitAccount().getAccountNumber()).isEqualTo(transitAccountAccountNumber);
     }
 
     @And("Собрать и вывести информацию об упавших мягких проверках")
