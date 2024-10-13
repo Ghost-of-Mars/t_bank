@@ -1,34 +1,54 @@
 package accounts;
 
+import clients.ApiClientAccount;
 import dto.AccountInfo;
-import apiClients.ApiClient;
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.restassured.RestAssured.given;
-import static specs.RequestSpec.reqSpec;
-import static specs.ResponseSpec.respSpec200;
+import static utils.ApiClientBase.getResponse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class steps {
+
+    Response response;
+
+    private ApiClientAccount apiClientAccount;
 
     List<AccountInfo> accountInfo = new ArrayList<>();
     SoftAssertions softAssertions = new SoftAssertions();
 
-    @When("Отправить запрос на {string}")
-    public void sendRequestToURL(String string) {
+    //токен и запрашивается в рамках конструктора ApiClientAccount
+    @Given("Создаем апи клиента для микросервиса Accounts")
+    public void createApiClientAccount() {
+        apiClientAccount = new ApiClientAccount();
+    }
 
-        accountInfo = (given(reqSpec)
-                .header("Authorization", ApiClient.TOKEN)
-                .when()
-                .get(string)
-                .then()
-                .spec(respSpec200)
-                .extract().jsonPath().getList("", AccountInfo.class));
+    // Метод получения токена через отдельный метод.
+    // Сейчас юзается статичный токен и запрашивается в рамках конструктора ApiClientAccount
+//    @Given("Создаем апи клиента для микросервиса Accounts")
+//    public void createApiClientAccountAndGetToken() {
+//        apiClientAccount = new ApiClientAccount();
+//        apiClientAccount.authenticate();
+//
+//    }
+
+    @When("Отправить GET запрос для микрсосервиса Accounts на path {string}")
+    public void getRequest(String path) {
+        //TODO реализовать сторэдж
+        //path = getCheckStorage(path);
+        apiClientAccount.get(path);
+    }
+
+    @Then("Проверить, что transitAccount.accountNumber равен {string}")
+    public void accountNumberEquals(String accountNumber) {
+        assertEquals(accountNumber, getResponse().getBody().jsonPath().getList("", AccountInfo.class).get(0).getAccountNumber());
     }
 
     @Then("Проверить,что у {int} элемента массива" +

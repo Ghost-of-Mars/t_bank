@@ -1,2 +1,8 @@
 url: https://business.tbank.ru/openapi/sandbox/api/
 bearerToken: TBankSandboxToken
+
+# Данные для получения accessToken`a
+urlKeycloak: urlKeycloak
+username: username
+password: password
+grantType: grantType
