@@ -11,6 +11,7 @@ import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.response.Response;
 import lombok.Getter;
+
 //Решение проблемы с Cannot access io.restassured.path.json.mapper.factory.Jackson2ObjectMapperFactory
 //import io.restassured.path.json.mapper.factory.Jackson2ObjectMapperFactory;
 
